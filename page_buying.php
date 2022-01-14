@@ -1,4 +1,4 @@
-
+<h1>Vásárlás</h1>
 <?php
 
   if ($flags & MASK_BUYING) {

@@ -1,0 +1,3 @@
+const ENCRYPT_KEY = 'F3229A0B371ED2D9441B830D21A390C3';
+const HOST='localhost';
+const DATABASE = 'access_levels'; 

@@ -1,4 +1,4 @@
-<h1>termékek</h1>
+<h1>Összes vásárlás</h1>
 <?php
 
 /* 
