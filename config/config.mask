@@ -1,0 +1,16 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+const MASK_ITEMS_VIEW=0b1;
+const MASK_BUYING=0b10;
+const MASK_PURCHASES=0b100;
+const MASK_USERS_MANAGAMENT=0b1000;
+const MASK_REGISTRATION=0b10000;
+const MASK_LOGIN=0b100000;
+const MASK_ITEMS_MANAGAMENT=0b1000000;
+
+
