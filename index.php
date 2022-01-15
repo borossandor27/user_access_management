@@ -1,19 +1,28 @@
 <?php 
+header('Content-Type: text/html; charset=utf-8');
+session_start();
 include_once './config/config.access';
 include_once './config/config.mask';
-
-
+include_once './classes/Adatbazis.php';
+$db = new Adatbazis();
+//$db->reset();
+$userlogin = $_SESSION['login']?? false;
 
 $menus = array(
-    array('item' => 'home', 'szoveg' => 'Home', 'mask' => MASK_ITEMS_VIEW, 'target' => 'index.php'),
+    array('item' => 'home', 'szoveg' => 'Home', 'mask' => MASK_ITEMS_VIEW, 'target' => 'page_home.php'),
     array('item' => 'list', 'szoveg' => 'Termékek', 'mask' => MASK_ITEMS_VIEW, 'target' => 'page_list.php'),
     array('item' => 'vasarlas', 'szoveg' => 'Vásárlás', 'mask' => MASK_BUYING, 'target' => 'page_buying.php'),
     array('item' => 'vasarlasok', 'szoveg' => 'Vásárlások', 'mask' => MASK_PURCHASES, 'target' => 'page_purchases.php'),
-    array('item' => 'users', 'szoveg' => 'Felhasználók', 'mask' => MASK_USERS, 'target' => 'page_users.php'),
-    array('item' => 'regist', 'szoveg' => 'Regisztráció', 'mask' => MASK_REGISTRATION, 'target' => 'page_registration.php'),
-    array('item' => 'login', 'szoveg' => 'Belépés', 'mask' => MASK_LOGIN, 'target' => 'page_login.php'),
-    array('item' => 'upload', 'szoveg' => 'Termékek karbantartása', 'mask' => MASK_ITEMS_MANAGAMENT, 'target' => 'index.php')
+    array('item' => 'users', 'szoveg' => 'Felhasználók', 'mask' => MASK_USERS_MANAGEMENT, 'target' => 'page_users.php'),
+    array('item' => 'upload', 'szoveg' => 'Termékek karbantartása', 'mask' => MASK_ITEMS_MANAGEMENT, 'target' => 'index.php')
 );
+if($userlogin){
+    $menus[] = array('item' => 'logout', 'szoveg' => 'Kilépés', 'mask' => MASK_LOGIN, 'target' => 'page_exit.php');
+} else {
+    $menus[] = array('item' => 'regist', 'szoveg' => 'Regisztráció', 'mask' => MASK_REGISTRATION, 'target' => 'page_registration.php');
+    $menus[] = array('item' => 'login', 'szoveg' => 'Belépés', 'mask' => MASK_LOGIN, 'target' => 'page_login.php');
+}
+
 $menuselected = filter_input(INPUT_GET, 'menu', FILTER_SANITIZE_STRING)?:'home';
 $content = "index.php";
 
@@ -26,8 +35,10 @@ function show_flags ($flags, $mask ) {
 //    header('Location: '.'index.php?menu=login');
   }
 }
-$user_flag = ACCESS_ADMIN;
-$_SESSION['login'] = false;
+$user_flag = $userlogin?$_SESSION['user']['role_mask']:ACCESS_GUEST;
+//echo '<pre>';
+//var_dump($_SESSION);
+//echo '</pre>';
 ?>
 
 <!DOCTYPE html>
@@ -55,12 +66,13 @@ $_SESSION['login'] = false;
                             $content=$value['target'];
                         }
                     }
+                    echo $userlogin?'<li style="float:right"><a href="#">'.$_SESSION['user']['username'].'</a></li>':'';
                     ?>
                 </ul>
             </nav>
             <div id="content">
                 <?php
-                                    require_once $content;
+                    require_once $content;
                 ?>
             </div>
         </div>

@@ -3,12 +3,18 @@ if(filter_input(INPUT_POST, 'adat', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAIL
     //-- adatok ellenőrzése
     $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
     $pass = filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_STRING);
-//    $
-//    if()
+
+    if($db->user_check($name, $pass)){
+        echo 'Sikeres ';
+        header("location: index.php");
+    } else {
+        echo 'sikertelen!!!';
+    }
+    
 }
 
 ?>
-<form>
+<form method="POST">
     <label>felhasználónév</label>
     <input type="text" name="name" />
     <label>jelszó</label>

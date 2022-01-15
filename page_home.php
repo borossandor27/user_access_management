@@ -1,3 +1,4 @@
+<h1>Home</h1>
 <?php
 
 /* 
@@ -5,9 +6,4 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-const ACCESS_USER=163;
-const ACCESS_GUEST=177;
-const ACCESS_GOODS_UPLODER=97;
-const ACCESS_ADMIN=237;
-
 
